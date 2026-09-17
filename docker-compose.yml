@@ -1,0 +1,9 @@
+services:
+  homepage:
+    build: .
+    container_name: homepage
+    ports:
+      - "8080:80"
+    volumes:
+      - ./data:/var/www/html/data
+    restart: unless-stopped

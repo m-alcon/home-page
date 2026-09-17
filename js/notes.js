@@ -1,17 +1,28 @@
 const Notes = (() => {
-    const STORAGE_KEY = 'dashboard_notes';
+    const API_URL = 'api/notes.php';
     const COLORS = ['yellow', 'green', 'blue', 'pink', 'orange'];
+    let notes = [];
+    let saveTimeout = null;
 
-    function load() {
+    async function load() {
         try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const res = await fetch(API_URL);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            notes = await res.json();
         } catch (e) {
-            return [];
+            notes = [];
         }
     }
 
-    function save(notes) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+    function save() {
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(notes)
+            });
+        }, 300);
     }
 
     function createNote(text, color) {
@@ -27,7 +38,6 @@ const Notes = (() => {
         const container = document.getElementById('notes-container');
         if (!container) return;
 
-        const notes = load();
         container.innerHTML = '';
 
         notes.forEach(note => {
@@ -41,7 +51,7 @@ const Notes = (() => {
             textarea.placeholder = 'Write something...';
             textarea.addEventListener('input', () => {
                 note.text = textarea.value;
-                save(notes);
+                save();
             });
 
             const footer = document.createElement('div');
@@ -55,7 +65,7 @@ const Notes = (() => {
                 dot.style.background = colorVar(c);
                 dot.addEventListener('click', () => {
                     note.color = c;
-                    save(notes);
+                    save();
                     render();
                 });
                 colorPicker.appendChild(dot);
@@ -69,7 +79,7 @@ const Notes = (() => {
                 const idx = notes.findIndex(n => n.id === note.id);
                 if (idx !== -1) {
                     notes.splice(idx, 1);
-                    save(notes);
+                    save();
                     render();
                 }
             });
@@ -94,16 +104,16 @@ const Notes = (() => {
     }
 
     function addNote() {
-        const notes = load();
         const note = createNote();
         notes.unshift(note);
-        save(notes);
+        save();
         render();
         const first = document.querySelector('.note-text');
         if (first) first.focus();
     }
 
-    function init() {
+    async function init() {
+        await load();
         render();
         const btn = document.getElementById('add-note-btn');
         if (btn) btn.addEventListener('click', addNote);

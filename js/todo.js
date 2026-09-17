@@ -1,16 +1,23 @@
 const Todo = (() => {
-    const STORAGE_KEY = 'dashboard_todos';
+    const API_URL = 'api/todos.php';
+    let todos = [];
 
-    function load() {
+    async function load() {
         try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const res = await fetch(API_URL);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            todos = await res.json();
         } catch (e) {
-            return [];
+            todos = [];
         }
     }
 
-    function save(todos) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+    function save() {
+        fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(todos)
+        });
     }
 
     function render() {
@@ -18,7 +25,6 @@ const Todo = (() => {
         const countEl = document.getElementById('todo-count');
         if (!list) return;
 
-        const todos = load();
         list.innerHTML = '';
 
         todos.forEach(todo => {
@@ -31,7 +37,7 @@ const Todo = (() => {
             checkbox.checked = todo.done;
             checkbox.addEventListener('change', () => {
                 todo.done = checkbox.checked;
-                save(todos);
+                save();
                 render();
             });
 
@@ -47,7 +53,7 @@ const Todo = (() => {
                 const idx = todos.findIndex(t => t.id === todo.id);
                 if (idx !== -1) {
                     todos.splice(idx, 1);
-                    save(todos);
+                    save();
                     render();
                 }
             });
@@ -70,24 +76,24 @@ const Todo = (() => {
         const text = input.value.trim();
         if (!text) return;
 
-        const todos = load();
         todos.push({
             id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
             text: text,
             done: false
         });
-        save(todos);
+        save();
         input.value = '';
         render();
     }
 
     function clearCompleted() {
-        const todos = load().filter(t => !t.done);
-        save(todos);
+        todos = todos.filter(t => !t.done);
+        save();
         render();
     }
 
-    function init() {
+    async function init() {
+        await load();
         render();
 
         const addBtn = document.getElementById('add-todo-btn');
