@@ -5,3 +5,5 @@ document.addEventListener('DOMContentLoaded', () => {
     Notes.init();
     Todo.init();
 });
+
+document.getElementById('piholeLink').href = location.protocol + '//' + location.hostname + '/admin';
