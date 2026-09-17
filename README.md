@@ -4,10 +4,8 @@ A lightweight homepage for Raspberry Pi with shared notes and to-do lists, runni
 
 ## Features
 
-- **Clock & Date** — live updating
-- **Weather** — current conditions for Montcada i Reixac (Open-Meteo, no API key)
-- **System Info** — CPU temp, RAM, disk, uptime (via host cron)
-- **Pi-hole Link** — quick access to admin panel
+- **Top Bar** — Pi-hole link (left), system stats with progress bars (right)
+- **Info Strip** — clock + date (left), weather (right)
 - **Notes** — colored sticky notes, shared across all devices
 - **To-Do List** — tasks with checkboxes, shared across all devices
 

@@ -46,17 +46,14 @@ const Weather = (() => {
             const wmo = WMO_CODES[c.weather_code] || { desc: 'Unknown', icon: '\u2753' };
 
             container.innerHTML =
-                '<div class="weather-main">' +
+                '<div class="weather-compact">' +
                     '<span class="weather-icon">' + wmo.icon + '</span>' +
                     '<span class="weather-temp">' + Math.round(c.temperature_2m) + '\u00b0C</span>' +
-                '</div>' +
-                '<div class="weather-desc">' + wmo.desc + '</div>' +
-                '<div class="weather-details">' +
-                    '<span>\ud83d\udca7 ' + c.relative_humidity_2m + '%</span>' +
-                    '<span>\ud83c\udf2c ' + Math.round(c.wind_speed_10m) + ' km/h</span>' +
+                    '<span class="weather-desc">' + wmo.desc + '</span>' +
+                    '<span class="weather-detail">\ud83d\udca7 ' + c.relative_humidity_2m + '%</span>' +
                 '</div>';
         } catch (e) {
-            container.innerHTML = '<div class="weather-error">Could not load weather</div>';
+            container.innerHTML = '<span class="weather-error">Could not load weather</span>';
         }
     }
 

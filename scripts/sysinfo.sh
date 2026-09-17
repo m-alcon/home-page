@@ -1,8 +1,9 @@
 #!/bin/bash
 # System info collector for Raspberry Pi
-# Run via cron: */5 * * * * /var/www/html/homepage/scripts/sysinfo.sh
+# Run via cron: */5 * * * * /home/$USER/homepage/scripts/sysinfo.sh
 
-OUT="/var/www/html/homepage/data/sysinfo.json"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+OUT="$SCRIPT_DIR/../data/sysinfo.json"
 
 mkdir -p "$(dirname "$OUT")"
 

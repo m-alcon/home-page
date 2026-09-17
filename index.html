@@ -7,50 +7,30 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Home</h1>
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="/admin/" class="pihole-link" title="Pi-hole Admin">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Pi-hole
+            </a>
+        </div>
+        <div class="topbar-right" id="system-content">
+            <span class="system-loading">Loading...</span>
+        </div>
     </header>
 
+    <div class="info-strip">
+        <div class="info-clock">
+            <span class="clock-time" id="clock-time">--:--</span>
+            <span class="clock-sep">&middot;</span>
+            <span class="clock-date" id="clock-date">---</span>
+        </div>
+        <div class="info-weather" id="weather-content">
+            <span class="weather-loading">Loading...</span>
+        </div>
+    </div>
+
     <main class="dashboard">
-        <section class="card card-clock" id="clock-card">
-            <div class="card-header">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>Clock</span>
-            </div>
-            <div class="clock-time" id="clock-time">--:--:--</div>
-            <div class="clock-date" id="clock-date">---</div>
-        </section>
-
-        <section class="card card-weather" id="weather-card">
-            <div class="card-header">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-                <span>Weather</span>
-            </div>
-            <div class="weather-content" id="weather-content">
-                <div class="weather-loading">Loading...</div>
-            </div>
-        </section>
-
-        <section class="card card-system" id="system-card">
-            <div class="card-header">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                <span>System</span>
-            </div>
-            <div class="system-content" id="system-content">
-                <div class="system-loading">Waiting for data...</div>
-            </div>
-        </section>
-
-        <section class="card card-pihole" id="pihole-card">
-            <div class="card-header">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span>Pi-hole</span>
-            </div>
-            <div class="pihole-content">
-                <a href="/admin/" class="pihole-link">Open Pi-hole Admin</a>
-            </div>
-        </section>
-
         <section class="card card-notes" id="notes-card">
             <div class="card-header">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>

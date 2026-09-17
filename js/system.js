@@ -30,28 +30,24 @@ const System = (() => {
             const diskPct = d.disk_total > 0 ? Math.round((d.disk_used / d.disk_total) * 100) : 0;
 
             container.innerHTML =
-                '<div class="system-grid">' +
-                    '<div class="system-item">' +
-                        '<span class="system-label">CPU Temp</span>' +
+                '<div class="system-compact">' +
+                    '<div class="system-item-compact">' +
+                        '<span class="system-label">CPU</span>' +
                         '<span class="system-value">' + d.cpu_temp + '\u00b0C</span>' +
                     '</div>' +
-                    '<div class="system-item">' +
-                        '<span class="system-label">Uptime</span>' +
-                        '<span class="system-value">' + formatUptime(d.uptime) + '</span>' +
-                    '</div>' +
-                    '<div class="system-item">' +
-                        '<span class="system-label">Memory</span>' +
+                    '<div class="system-item-compact">' +
+                        '<span class="system-label">RAM</span>' +
                         '<span class="system-value">' + memPct + '%</span>' +
                         '<div class="system-bar"><div class="system-bar-fill ' + barClass(memPct) + '" style="width:' + memPct + '%"></div></div>' +
                     '</div>' +
-                    '<div class="system-item">' +
+                    '<div class="system-item-compact">' +
                         '<span class="system-label">Disk</span>' +
                         '<span class="system-value">' + diskPct + '%</span>' +
                         '<div class="system-bar"><div class="system-bar-fill ' + barClass(diskPct) + '" style="width:' + diskPct + '%"></div></div>' +
                     '</div>' +
                 '</div>';
         } catch (e) {
-            container.innerHTML = '<div class="system-error">No system data yet.<br><small>Run scripts/sysinfo.sh via cron.</small></div>';
+            container.innerHTML = '<span class="system-error">No system data yet</span>';
         }
     }
 
